@@ -4,6 +4,15 @@ on:
     branches:
       - dev
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
 jobs:
   build:
     name: ==== 执行 npm-build 工作流 ====
@@ -26,9 +35,6 @@ jobs:
           path: ./dist
   deploy:
     needs: build
-    permissions:
-      pages: write
-      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
