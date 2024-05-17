@@ -1,10 +1,10 @@
 name: 打包项目
-on: 
+on:
   push:
     branches:
       - dev
 
-permissions: 
+permissions:
   contents: write
 
 jobs:
@@ -13,16 +13,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      name: ==== 读取仓库内容 ====
-      - run: actions/checkout@v4
+      - name: ==== 读取仓库内容 ====
+        run: actions/checkout@v4
 
-      name: ==== 安装依赖 和 打包 ====
-      - run: |
+      - name: ==== 安装依赖 和 打包 ====
+        run: |
           yarn
           yarn run build
 
-      name: ==== 项目部署 ====
-      uses: JamesIves/github-pages-deploy-action@v4
-      with: 
-        branch: prod-pages
-        folder: build
+      - name: ==== 项目部署 ====
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: prod-pages
+          folder: build
