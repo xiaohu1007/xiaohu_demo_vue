@@ -4,6 +4,15 @@ on:
     branches:
       - dev
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
 jobs:
   npm-build:
     name: ==== 执行 npm-build 工作流 ====
@@ -13,14 +22,22 @@ jobs:
       - name: ==== 读取仓库内容 ====
         uses: actions/checkout@v4
 
-      - name: ==== 登录docker hub ====
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME}}
-          password: ${{ secrets.DOCKER_HUB_TOKEN}}
+      - name: ==== 安装依赖 和 打包 ====
+        run: |
+          yarn
+          yarn run build
 
-      - name: ==== 构建 推送docker hub ====
-        uses: docker/build-push-action@v5
+      - name: ==== 项目部署 ====
+        uses: actions/upload-pages-artifact@v3
         with:
-          push: true
-          tags: xiaohu1007/xiaohu-demo-vue:latest
+          path: ./dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: ==== 获取生成地址 ====
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: ==== 是生产环境 ====
+        id: deployment
+        uses: actions/deploy-pages@v4
