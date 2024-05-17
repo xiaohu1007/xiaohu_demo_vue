@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  npm-build:
+  build:
     name: ==== 执行 npm-build 工作流 ====
     runs-on: ubuntu-latest
 
