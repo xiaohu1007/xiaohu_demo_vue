@@ -3,7 +3,7 @@
  * @Author: wuhaohu
  * @Date: 2024-05-17 10:13:14
  * @LastEditors: wuhaohu
- * @LastEditTime: 2024-05-17 13:23:57
+ * @LastEditTime: 2024-05-17 15:37:48
  * @FilePath: \xiaohu_demo_vue\vite.config.ts
  */
 import { defineConfig } from 'vite';
@@ -15,7 +15,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './',
+  base: '/',
   plugins: [
     vue(),
     AutoImport({
