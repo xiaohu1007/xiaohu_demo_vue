@@ -1,11 +1,8 @@
-name: 打包项目
-on: 
+name: 构建镜像文件并推送docker hub
+on:
   push:
     branches:
       - dev
-
-permissions: 
-  contents: write
 
 jobs:
   npm-build:
@@ -13,16 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      name: ==== 读取仓库内容 ====
-      - run: actions/checkout@v4
+      - name: ==== 读取仓库内容 ====
+        uses: actions/checkout@v4
 
-      name: ==== 安装依赖 和 打包 ====
-      - run: |
-          yarn
-          yarn run build
+      - name: ==== 登录docker hub ====
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME}}
+          password: ${{ secrets.DOCKER_HUB_TOKEN}}
 
-      name: ==== 项目部署 ====
-      uses: JamesIves/github-pages-deploy-action@v4
-      with: 
-        branch: prod-pages
-        folder: build
+      - name: ==== 构建 推送docker hub ====
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: xiaohu1007/xiaohu-demo-vue:latest
