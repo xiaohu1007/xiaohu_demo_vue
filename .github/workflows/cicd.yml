@@ -35,9 +35,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: ==== 获取生成地址 ====
+      name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: ==== 是生产环境 ====
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
