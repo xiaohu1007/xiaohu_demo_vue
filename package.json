@@ -26,6 +26,7 @@
   "devDependencies": {
     "@types/node": "^20.12.12",
     "@types/qs": "^6.9.15",
+    "@types/three": "^0.165.0",
     "@typescript-eslint/eslint-plugin": "^7.9.0",
     "@typescript-eslint/parser": "^7.9.0",
     "@vitejs/plugin-vue": "^5.0.4",
