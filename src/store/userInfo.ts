@@ -3,7 +3,7 @@
  * @Author: wuhaohu
  * @Date: 2024-05-22 10:44:25
  * @LastEditors: wuhaohu
- * @LastEditTime: 2024-06-04 11:33:35
+ * @LastEditTime: 2024-06-04 15:23:30
  * @FilePath: \xiaohu_demo_vue\src\store\userInfo.ts
  */
 import dayjs from 'dayjs';
@@ -43,7 +43,7 @@ export const useUserInfoStore = defineStore('userInfo', {
           code: number;
           data: userInfo;
           message: string | null;
-        }>((resolve, reject) => {
+        }>((resolve) => {
           setTimeout(() => {
             resolve({
               code: 200,
