@@ -6,7 +6,7 @@
  * @LastEditTime: 2024-05-21 16:01:49
  * @FilePath: \xiaohu_demo_vue\src\router\index.ts
  */
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import Home from '@/views/Home.vue';
 import ThreeJs from '@/views/ThreeJs.vue';
 
@@ -22,9 +22,10 @@ const routes: Array<RouteRecordRaw> = [
     component: ThreeJs,
   },
 ];
-
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
+  // createWebHistory(import.meta.env.VITE_PUBLIC_PATH,),
+
   routes,
 });
 

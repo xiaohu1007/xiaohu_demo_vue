@@ -19,6 +19,8 @@ import * as THREE from 'three';
 import gsap from 'gsap';
 import { OrbitControls } from 'three/examples/jsm/Addons.js';
 
+const router = useRouter();
+
 // 鼠标双击
 const cursorDblclick = () => {
   // 兼容safari
@@ -39,6 +41,9 @@ const cursorDblclick = () => {
       (canvasRef.value as any)?.webkitRequestFullscreen();
     }
   }
+
+  
+  router.push({ path: '/threejs' })
 };
 
 // 鼠标移动监听
