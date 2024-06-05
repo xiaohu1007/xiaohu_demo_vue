@@ -42,8 +42,6 @@ const cursorDblclick = () => {
     }
   }
 
-  
-  router.push({ path: '/threejs' })
 };
 
 // 鼠标移动监听
