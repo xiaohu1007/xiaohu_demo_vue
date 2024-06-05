@@ -3,7 +3,7 @@
  * @Author: wuhaohu
  * @Date: 2024-06-04 11:31:18
  * @LastEditors: wuhaohu
- * @LastEditTime: 2024-06-04 11:46:32
+ * @LastEditTime: 2024-06-05 17:43:44
  * @FilePath: \xiaohu_demo_vue\src\utils\index.ts
  */
 import _ from 'lodash';
@@ -43,10 +43,10 @@ export const getRandomNumber = (min: number, max: number): number => {
 
 // 是否是开发环境
 export function isDev() {
-  return process.env.NODE_ENV === 'development';
+  return import.meta.env.NODE_ENV === 'development';
 }
 
 // 是否是生产环境
 export function isProd() {
-  return process.env.NODE_ENV === 'production';
+  return import.meta.env.NODE_ENV === 'production';
 }

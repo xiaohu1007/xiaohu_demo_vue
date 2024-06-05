@@ -10,7 +10,7 @@
 import { HttpRequest } from './config/https';
 
 const request = new HttpRequest({
-  baseURL: process.env.VITE_API_PREFIX,
+  baseURL: import.meta.env.VITE_API_PREFIX,
 });
 
 export default request;
