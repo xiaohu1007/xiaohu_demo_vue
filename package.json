@@ -16,13 +16,14 @@
     "axios": "^1.7.2",
     "dayjs": "^1.11.11",
     "element-plus": "^2.7.3",
+    "gsap": "3.5.1",
+    "http-server": "^14.1.1",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "qs": "^6.12.1",
     "three": "^0.165.0",
     "vue": "^3.4.21",
-    "vue-router": "4",
-    "gsap": "3.5.1"
+    "vue-router": "4"
   },
   "devDependencies": {
     "@types/node": "^20.12.12",
