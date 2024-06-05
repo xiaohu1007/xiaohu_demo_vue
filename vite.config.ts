@@ -3,7 +3,7 @@
  * @Author: wuhaohu
  * @Date: 2024-05-17 14:06:31
  * @LastEditors: wuhaohu
- * @LastEditTime: 2024-06-04 14:23:21
+ * @LastEditTime: 2024-06-05 17:37:53
  * @FilePath: \xiaohu_demo_vue\vite.config.ts
  */
 import { defineConfig, loadEnv } from 'vite';
@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     // 设置基础路径，根据环境变量区分生产环境和开发环境
-    base: process.env.VUE_APP_PUBLIC_PATH,
+    base: process.env.VITE_PUBLIC_PATH,
     plugins: [
       // Vue 插件，支持 .vue 文件
       vue(),
@@ -60,20 +60,17 @@ export default defineConfig(({ mode }) => {
       port: 8888, // 指定开发服务器端口
       open: true, // 是否自动打开浏览器
       proxy: {
-        [process.env.VUE_APP_API_PREFIX as string]: {
-          target: process.env.VUE_APP_URL, // 指定要代理的目标地址
+        [process.env.VITE_API_PREFIX as string]: {
+          target: process.env.VITE_URL, // 指定要代理的目标地址
           changeOrigin: true, // 是否改变请求的来源
           rewrite: (path) =>
-            path.replace(
-              new RegExp(`/^${process.env.VUE_APP_API_PREFIX}/`),
-              '',
-            ), // 可选的路径重写规则
+            path.replace(new RegExp(`/^${process.env.VITE_API_PREFIX}/`), ''), // 可选的路径重写规则
         },
       },
     },
     build: {
       outDir: fileName, // 指定打包输出目录
-      assetsPublicPath: process.env.VUE_APP_PUBLIC_PATH, // 设置资源公共路径
+      assetsPublicPath: process.env.VITE_PUBLIC_PATH, // 设置资源公共路径
     },
   };
 });
