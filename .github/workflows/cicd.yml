@@ -1,4 +1,4 @@
-name: 构建镜像文件并推送docker hub
+name: 打包并发布
 on:
   push:
     branches:

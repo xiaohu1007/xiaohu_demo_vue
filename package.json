@@ -21,7 +21,8 @@
     "qs": "^6.12.1",
     "three": "^0.165.0",
     "vue": "^3.4.21",
-    "vue-router": "4"
+    "vue-router": "4",
+    "gsap": "3.5.1"
   },
   "devDependencies": {
     "@types/node": "^20.12.12",
