@@ -3,7 +3,7 @@
  * @Author: wuhaohu
  * @Date: 2024-05-21 15:56:11
  * @LastEditors: wuhaohu
- * @LastEditTime: 2024-06-05 16:45:48
+ * @LastEditTime: 2024-06-05 17:46:25
  * @FilePath: \xiaohu_demo_vue\src\views\home.vue
 -->
 <template>
@@ -20,7 +20,7 @@ import gsap from 'gsap';
 import { OrbitControls } from 'three/examples/jsm/Addons.js';
 
 // 鼠标双击
-const cursorDblclick = (e: Event) => {
+const cursorDblclick = () => {
   // 兼容safari
   const fullscreenElement =
     document.fullscreenElement ||
@@ -145,6 +145,8 @@ function animationsLearn(scene: THREE.Scene, newMesh?: any) {
     gsap.to(mesh.position, { duration: 1, delay: 2, x: -2 });
   };
 
+  console.log(adaptTime, gsapAnimation);
+
   // gsapAnimation();
 
   // animation
@@ -169,6 +171,8 @@ function animationsLearn(scene: THREE.Scene, newMesh?: any) {
 
   return { tick };
 }
+
+console.log(animationsLearn, groupLearn, baseLearn);
 
 // 循环执行
 const animationTick = (callBack: any) => {
