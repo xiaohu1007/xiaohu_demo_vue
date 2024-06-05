@@ -8,6 +8,7 @@
  */
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home from '@/views/Home.vue';
+import ThreeJs from '@/views/ThreeJs.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -15,11 +16,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Home',
     component: Home,
   },
-  // {
-  //   path: '/threejs',
-  //   name: 'ThreeJs',
-  //   component: ThreeJs,
-  // },
+  {
+    path: '/threejs',
+    name: 'ThreeJs',
+    component: ThreeJs,
+  },
 ];
 
 const router = createRouter({
