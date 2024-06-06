@@ -6,9 +6,13 @@
  * @LastEditTime: 2024-05-21 16:01:49
  * @FilePath: \xiaohu_demo_vue\src\router\index.ts
  */
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
-import Home from '@/views/Home.vue';
-import ThreeJs from '@/views/ThreeJs.vue';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+
+//懒加载
+const [Home, ThreeJs] = [
+  () => import('@/views/Home.vue'),
+  () => import('@/views/ThreeJs.vue'),
+];
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -23,9 +27,7 @@ const routes: Array<RouteRecordRaw> = [
   },
 ];
 const router = createRouter({
-  history: createWebHashHistory(),
-  // createWebHistory(import.meta.env.VITE_PUBLIC_PATH,),
-
+  history: createWebHistory(import.meta.env.VITE_PUBLIC_PATH),
   routes,
 });
 
