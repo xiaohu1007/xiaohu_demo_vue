@@ -3,7 +3,7 @@
  * @Author: wuhaohu
  * @Date: 2024-05-21 15:56:11
  * @LastEditors: wuhaohu
- * @LastEditTime: 2024-06-05 17:46:25
+ * @LastEditTime: 2024-06-06 13:02:28
  * @FilePath: \xiaohu_demo_vue\src\views\home.vue
 -->
 <template>
@@ -18,6 +18,31 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { OrbitControls } from 'three/examples/jsm/Addons.js';
+import GUI from 'lil-gui';
+
+// debug gui
+const gui = new GUI({
+  width: 300,
+  title: 'debug UI',
+  closeFolders: true,
+});
+gui.close();
+gui.hide();
+
+window.addEventListener('keydown', (e: KeyboardEvent) => {
+  if (e.key == 'h') {
+    gui.show(gui._hidden);
+  }
+});
+
+const guiDebugObject: {
+  color?: string;
+  spin?: Function;
+  subdivbision?: number;
+} = {
+  color: '#ff0000',
+  subdivbision: 2,
+};
 
 // 鼠标双击
 const cursorDblclick = () => {
@@ -64,7 +89,7 @@ const size = {
 function baseLearn(scene: THREE.Scene) {
   const geometry = new THREE.BoxGeometry(1, 1, 1); // 物体 Geometry
   const material = new THREE.MeshBasicMaterial({
-    color: 'red',
+    color: '#ff0000',
     // wireframe: true,
   }); // 材质 material
   const mesh = new THREE.Mesh(geometry, material); // 网络 mesh
@@ -82,7 +107,7 @@ function groupLearn(scene: THREE.Scene) {
 
   const cube1 = new THREE.Mesh(
     new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial({ color: 'red' }),
+    new THREE.MeshBasicMaterial({ color: '#ff0000' }),
   );
   group.add(cube1);
 
@@ -111,7 +136,7 @@ function groupLearn(scene: THREE.Scene) {
 function animationsLearn(scene: THREE.Scene, newMesh?: any) {
   const geometry = new THREE.BoxGeometry(1, 1, 1); // 物体 Geometry
   const material = new THREE.MeshBasicMaterial({
-    color: 'red',
+    color: '#ff0000',
     // wireframe: true,
   }); // 材质 material
   let mesh = new THREE.Mesh(geometry, material); // 网络 mesh
@@ -145,8 +170,6 @@ function animationsLearn(scene: THREE.Scene, newMesh?: any) {
     gsap.to(mesh.position, { duration: 1, delay: 2, x: -2 });
   };
 
-  console.log(adaptTime, gsapAnimation);
-
   // gsapAnimation();
 
   // animation
@@ -169,10 +192,8 @@ function animationsLearn(scene: THREE.Scene, newMesh?: any) {
     });
   };
 
-  return { tick };
+  return { tick, adaptTime, gsapAnimation, animationsLearn };
 }
-
-console.log(animationsLearn, groupLearn, baseLearn);
 
 // 循环执行
 const animationTick = (callBack: any) => {
@@ -182,16 +203,88 @@ const animationTick = (callBack: any) => {
   });
 };
 
-// 相机学习
-function cameraLearn(scene: THREE.Scene, renderer: THREE.WebGLRenderer) {
-  const geometry = new THREE.BoxGeometry(1, 1, 1); // 物体 Geometry
+// 几何体学习
+const geometryLearn = () => {
+  // 获取float32array
+  const count = 50;
+  const positionArray = new Float32Array(count * 3 * 3);
+
+  Array(count * 3 * 3)
+    .fill(0)
+    .forEach((_item, index) => {
+      positionArray[index] = Math.random();
+    });
+
+  // 生成positionAttribute
+  const positionAttribute = new THREE.BufferAttribute(positionArray, 3);
+
+  const geometry = new THREE.BufferGeometry(); // 物体 Geometry
+
+  geometry.setAttribute('position', positionAttribute);
+
   const material = new THREE.MeshBasicMaterial({
-    color: 'red',
-    // wireframe: true,
+    color: '#ff0000',
+    wireframe: true,
   }); // 材质 material
   const mesh = new THREE.Mesh(geometry, material); // 网络 mesh
+  return { mesh, geometryLearn, groupLearn, animationsLearn, baseLearn };
+};
+
+// debug学习
+const guiDebugLearn = (
+  mesh: THREE.Mesh<
+    THREE.BoxGeometry,
+    THREE.MeshBasicMaterial,
+    THREE.Object3DEventMap
+  >,
+  material: THREE.MeshBasicMaterial,
+) => {
+  const cube = gui.addFolder('cube');
+
+  cube.add(mesh.position, 'y', -3, 3, 0.01);
+  cube.add(mesh, 'visible');
+  cube.add(material, 'wireframe');
+  cube.addColor(guiDebugObject, 'color').onChange(() => {
+    material.color.set(guiDebugObject.color || '#ff0000');
+  });
+
+  guiDebugObject.spin = () => {
+    gsap.to(mesh.rotation, { y: mesh.rotation.y + Math.PI * 2 });
+  };
+  cube.add(guiDebugObject, 'spin');
+
+  cube
+    .add(guiDebugObject, 'subdivbision')
+    .min(1)
+    .max(20)
+    .step(1)
+    .onFinishChange(() => {
+      mesh.geometry.dispose();
+      mesh.geometry = new THREE.BoxGeometry(
+        1,
+        1,
+        1,
+        guiDebugObject.subdivbision,
+        guiDebugObject.subdivbision,
+        guiDebugObject.subdivbision,
+      );
+    });
+};
+
+// 相机学习
+function cameraLearn(scene: THREE.Scene, renderer: THREE.WebGLRenderer) {
+  const geometry = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2); // 物体 Geometry
+  const material = new THREE.MeshBasicMaterial({
+    color: guiDebugObject.color,
+    wireframe: true,
+  }); // 材质 material
+  const mesh = new THREE.Mesh(geometry, material); // 网络 mesh
+  // const { mesh } = geometryLearn();
 
   scene.add(mesh);
+
+  // debug配置
+  guiDebugLearn(mesh, material, geometry);
 
   // 透视相机
   const camera = new THREE.PerspectiveCamera(
