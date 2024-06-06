@@ -3,7 +3,7 @@
  * @Author: wuhaohu
  * @Date: 2024-05-17 14:06:31
  * @LastEditors: wuhaohu
- * @LastEditTime: 2024-06-05 17:41:54
+ * @LastEditTime: 2024-06-06 10:44:52
  * @FilePath: \xiaohu_demo_vue\vite.config.ts
  */
 import { defineConfig, loadEnv } from 'vite';
@@ -13,6 +13,7 @@ import path from 'path';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -43,6 +44,8 @@ export default defineConfig(({ mode }) => {
       Components({
         resolvers: [ElementPlusResolver()],
       }),
+      // 分析打包后的文件
+      visualizer({ open: true }),
     ],
     define: {
       'process.env': {}, // 定义全局变量，防止因使用 process.env 导致的报错
@@ -71,6 +74,11 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: fileName, // 指定打包输出目录
       assetsPublicPath: env.VITE_PUBLIC_PATH, // 设置资源公共路径
+      cssCodeSplit: true, //css 拆分
+      sourcemap: false, //不生成sourcemap
+      minify: false, //是否禁用最小化混淆，esbuild打包速度最快，terser打包体积最小
+      chunkSizeWarningLimit: 2000,
+      assetsInlineLimit: 5000, //小于该值 图片将打包成Base64
     },
   };
 });
