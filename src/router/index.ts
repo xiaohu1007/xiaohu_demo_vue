@@ -3,7 +3,7 @@
  * @Author: wuhaohu
  * @Date: 2024-05-21 15:54:58
  * @LastEditors: wuhaohu
- * @LastEditTime: 2024-06-06 10:04:52
+ * @LastEditTime: 2024-06-06 10:27:45
  * @FilePath: \xiaohu_demo_vue\src\router\index.ts
  */
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
@@ -27,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
   },
 ];
 const router = createRouter({
-  history: createWebHistory('/'),
+  history: createWebHistory(import.meta.env.VITE_PUBLIC_PATH),
   routes,
 });
 
