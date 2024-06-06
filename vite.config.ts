@@ -3,7 +3,7 @@
  * @Author: wuhaohu
  * @Date: 2024-05-17 14:06:31
  * @LastEditors: wuhaohu
- * @LastEditTime: 2024-06-06 10:44:52
+ * @LastEditTime: 2024-06-06 10:57:38
  * @FilePath: \xiaohu_demo_vue\vite.config.ts
  */
 import { defineConfig, loadEnv } from 'vite';
@@ -76,7 +76,7 @@ export default defineConfig(({ mode }) => {
       assetsPublicPath: env.VITE_PUBLIC_PATH, // 设置资源公共路径
       cssCodeSplit: true, //css 拆分
       sourcemap: false, //不生成sourcemap
-      minify: false, //是否禁用最小化混淆，esbuild打包速度最快，terser打包体积最小
+      minify: 'terser', //是否禁用最小化混淆，esbuild打包速度最快，terser打包体积最小
       chunkSizeWarningLimit: 2000,
       assetsInlineLimit: 5000, //小于该值 图片将打包成Base64
     },
