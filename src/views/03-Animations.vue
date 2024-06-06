@@ -7,7 +7,7 @@
  * @FilePath: \xiaohu_demo_vue\src\views\ThreeJs.vue
 -->
 <template>
-  <div>threeJs</div>
+  <div>Animations</div>
 </template>
 
 <script setup lang="ts"></script>

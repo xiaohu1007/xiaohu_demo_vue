@@ -3,7 +3,7 @@
  * @Author: wuhaohu
  * @Date: 2024-05-17 14:06:31
  * @LastEditors: wuhaohu
- * @LastEditTime: 2024-06-06 10:57:38
+ * @LastEditTime: 2024-06-06 16:10:16
  * @FilePath: \xiaohu_demo_vue\vite.config.ts
  */
 import { defineConfig, loadEnv } from 'vite';
@@ -56,6 +56,9 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'), // 配置路径别名
+        assets: path.resolve(__dirname, './src/assets'),
+        utils: path.resolve(__dirname, './src/utils'),
+        api: path.resolve(__dirname, './src/api'),
       },
     },
     server: {
