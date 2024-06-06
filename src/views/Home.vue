@@ -3,7 +3,7 @@
  * @Author: wuhaohu
  * @Date: 2024-05-21 15:56:11
  * @LastEditors: wuhaohu
- * @LastEditTime: 2024-06-06 13:02:28
+ * @LastEditTime: 2024-06-06 13:05:09
  * @FilePath: \xiaohu_demo_vue\src\views\home.vue
 -->
 <template>
@@ -284,7 +284,7 @@ function cameraLearn(scene: THREE.Scene, renderer: THREE.WebGLRenderer) {
   scene.add(mesh);
 
   // debug配置
-  guiDebugLearn(mesh, material, geometry);
+  guiDebugLearn(mesh, material);
 
   // 透视相机
   const camera = new THREE.PerspectiveCamera(
