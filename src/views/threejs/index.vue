@@ -3,8 +3,8 @@
  * @Author: wuhaohu
  * @Date: 2024-05-21 15:56:11
  * @LastEditors: wuhaohu
- * @LastEditTime: 2024-06-06 17:12:50
- * @FilePath: \xiaohu_demo_vue\src\views\home.vue
+ * @LastEditTime: 2024-06-07 17:17:52
+ * @FilePath: \xiaohu_demo_vue\src\views\threejs\index.vue
 -->
 <template>
   <canvas
@@ -56,24 +56,24 @@ doorColorTextures.center.y = 0.5;
 // 过滤器
 doorColorTextures.minFilter = THREE.NearestFilter;
 
-const doorColor2Textures = texturesLoader.load(
-  new URL('assets/images/door-2.jpg', import.meta.url).href,
-);
-const doorColor3Textures = texturesLoader.load(
-  new URL('assets/images/door-3.jpg', import.meta.url).href,
-);
-const doorColor4Textures = texturesLoader.load(
-  new URL('assets/images/door-4.jpg', import.meta.url).href,
-);
-const doorColor5Textures = texturesLoader.load(
-  new URL('assets/images/door-5.jpg', import.meta.url).href,
-);
-const doorColor6Textures = texturesLoader.load(
-  new URL('assets/images/door-6.jpg', import.meta.url).href,
-);
-const doorColor7Textures = texturesLoader.load(
-  new URL('assets/images/door-7.jpg', import.meta.url).href,
-);
+// const doorColor2Textures = texturesLoader.load(
+//   new URL('assets/images/door-2.jpg', import.meta.url).href,
+// );
+// const doorColor3Textures = texturesLoader.load(
+//   new URL('assets/images/door-3.jpg', import.meta.url).href,
+// );
+// const doorColor4Textures = texturesLoader.load(
+//   new URL('assets/images/door-4.jpg', import.meta.url).href,
+// );
+// const doorColor5Textures = texturesLoader.load(
+//   new URL('assets/images/door-5.jpg', import.meta.url).href,
+// );
+// const doorColor6Textures = texturesLoader.load(
+//   new URL('assets/images/door-6.jpg', import.meta.url).href,
+// );
+// const doorColor7Textures = texturesLoader.load(
+//   new URL('assets/images/door-7.jpg', import.meta.url).href,
+// );
 
 // debug gui
 const gui = new GUI({

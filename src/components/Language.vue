@@ -1,3 +1,11 @@
+<!--
+ * @Description: 
+ * @Author: wuhaohu
+ * @Date: 2024-06-07 14:17:47
+ * @LastEditors: wuhaohu
+ * @LastEditTime: 2024-06-07 17:16:18
+ * @FilePath: \xiaohu_demo_vue\src\components\Language.vue
+-->
 <template>
   <el-dropdown @command="handleCommand">
     <span class="el-dropdown-link">
@@ -21,13 +29,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ArrowDown } from "@element-plus/icons-vue";
-import { useI18n } from "vue-i18n";
-import { computed } from "vue";
-import langMap from "@/locales/langMap";
-import cacheUtils from "@/utils/cacheUtils";
-import { useAppStore } from "@/store/modules/appStore";
-import { ipcRenderer } from "electron";
+import { ArrowDown } from '@element-plus/icons-vue';
+import { useI18n } from 'vue-i18n';
+import { computed } from 'vue';
+import langMap from '@/locales/langMap';
+import cacheUtils from '@/utils/cacheUtils';
+import { useAppStore } from '@/store/modules/appStore';
 
 const appStore = useAppStore();
 const i18n = useI18n();
@@ -38,11 +45,9 @@ const currentLang = computed(() => i18n.locale.value);
 function handleCommand(lang: string) {
   i18n.locale.value = lang;
   // 设置缓存的值
-  cacheUtils.set("lang", lang);
+  cacheUtils.set('lang', lang);
   // 更新全局状态
   appStore.lang = lang;
-  // 主进程通知其他窗口同步修改语言
-  ipcRenderer.invoke("lang:change", lang);
 }
 </script>
 <style scoped>
