@@ -3,7 +3,7 @@
  * @Author: wuhaohu
  * @Date: 2024-05-17 14:06:31
  * @LastEditors: wuhaohu
- * @LastEditTime: 2024-06-06 16:10:16
+ * @LastEditTime: 2024-06-07 16:43:25
  * @FilePath: \xiaohu_demo_vue\vite.config.ts
  */
 import { defineConfig, loadEnv } from 'vite';
@@ -14,6 +14,9 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import { visualizer } from 'rollup-plugin-visualizer';
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import Icons from 'unplugin-icons/vite';
+import IconsResolver from 'unplugin-icons/resolver';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -37,28 +40,72 @@ export default defineConfig(({ mode }) => {
       // 自动导入插件，自动导入 Vue 和 Vue Router 的 API
       AutoImport({
         imports: ['vue', 'vue-router', 'pinia'],
-        dts: 'auto-imports.d.ts', // 根据引入来源自动生成的类型声明文件路径
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          ElementPlusResolver({
+            importStyle: 'sass',
+          }),
+          // 自动导入图标组件
+          IconsResolver({
+            // 自动引入的Icon组件统一前缀，默认为icon，设置false为不需要前缀
+            prefix: 'icon',
+            // 当图标集名字过长时，可使用集合别名
+            alias: {
+              system: 'system-uicons',
+            },
+          }),
+        ],
+        dts: path.resolve(__dirname, 'types/auto-imports.d.ts'),
       }),
       // 自动导入组件插件，支持按需导入 Element Plus 组件
       Components({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          // 自动注册图标组件
+          IconsResolver({
+            enabledCollections: ['ep'], // @iconify-json/ep 是 Element Plus 的图标库
+          }),
+          ElementPlusResolver({
+            importStyle: 'sass',
+          }),
+        ],
+        dts: path.resolve(__dirname, 'types/components.d.ts'),
       }),
       // 分析打包后的文件
       visualizer({ open: true }),
+      // 自定义svg组件
+      createSvgIconsPlugin({
+        iconDirs: [path.resolve(__dirname, 'src/assets/icons')],
+        symbolId: 'icon-[dir]-[name]',
+        svgoOptions: {
+          // 删除一些填充的属性
+          plugins: [
+            {
+              name: 'removeAttrs',
+              params: { attrs: ['class', 'data-name', 'fill', 'stroke'] },
+            },
+            // 删除样式标签
+            'removeStyleElement',
+          ],
+        },
+      }),
+      // 优雅使用icons
+      Icons({
+        compiler: 'vue3', // 指定编译器
+        autoInstall: true, // 自动安装
+      }),
     ],
     define: {
       'process.env': {}, // 定义全局变量，防止因使用 process.env 导致的报错
     },
     root: process.cwd(), // 项目根目录
     assetsInclude: '**/*.xlsx', // 允许打包 xlsx 文件
-
+    envDir: path.resolve(__dirname, './env'),
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'), // 配置路径别名
-        assets: path.resolve(__dirname, './src/assets'),
-        utils: path.resolve(__dirname, './src/utils'),
-        api: path.resolve(__dirname, './src/api'),
+        '@assets': path.resolve(__dirname, './src/assets'),
+        '@utils': path.resolve(__dirname, './src/utils'),
+        '@api': path.resolve(__dirname, './src/apis/modules'),
+        '@store': path.resolve(__dirname, './src/store/modules'),
       },
     },
     server: {
@@ -71,6 +118,14 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true, // 是否改变请求的来源
           rewrite: (path) =>
             path.replace(new RegExp(`/^${env.VITE_API_PREFIX}/`), ''), // 可选的路径重写规则
+        },
+      },
+    },
+
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use '@/styles/variables.scss' as *;`, // 引入全局变量文件
         },
       },
     },

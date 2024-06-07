@@ -3,7 +3,7 @@
  * @Author: wuhaohu
  * @Date: 2024-05-21 15:54:58
  * @LastEditors: wuhaohu
- * @LastEditTime: 2024-06-06 17:29:32
+ * @LastEditTime: 2024-06-07 14:23:36
  * @FilePath: \xiaohu_demo_vue\src\router\index.ts
  */
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
@@ -11,6 +11,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 //懒加载
 const [
   Home,
+  Threejs,
   BaseSence,
   Transform,
   Animations,
@@ -21,16 +22,17 @@ const [
   Textures,
   Materials,
 ] = [
-  () => import('@/views/Home.vue'),
-  () => import('@/views/01-BaseSence.vue'),
-  () => import('@/views/02-Transform.vue'),
-  () => import('@/views/03-Animations.vue'),
-  () => import('@/views/04-Cameras.vue'),
-  () => import('@/views/05-FullScreenAndResizing.vue'),
-  () => import('@/views/06-Gemometries.vue'),
-  () => import('@/views/07-DebugUI.vue'),
-  () => import('@/views/08-Textures.vue'),
-  () => import('@/views/09-Materials.vue'),
+  () => import('@/views/home/index.vue'),
+  () => import('@/views/threejs/index.vue'),
+  () => import('@/views/threejs/01-BaseSence.vue'),
+  () => import('@/views/threejs/02-Transform.vue'),
+  () => import('@/views/threejs/03-Animations.vue'),
+  () => import('@/views/threejs/04-Cameras.vue'),
+  () => import('@/views/threejs/05-FullScreenAndResizing.vue'),
+  () => import('@/views/threejs/06-Gemometries.vue'),
+  () => import('@/views/threejs/07-DebugUI.vue'),
+  () => import('@/views/threejs/08-Textures.vue'),
+  () => import('@/views/threejs/09-Materials.vue'),
 ];
 
 const routes: Array<RouteRecordRaw> = [
@@ -38,6 +40,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: '/threejs',
+    name: 'Threejs',
+    component: Threejs,
     children: [
       {
         path: '/baseSence',
